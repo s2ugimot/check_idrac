@@ -429,6 +429,14 @@ class PARSER:
             if len(self.hardware[3].split('|')) > len(tmp[t]):
                 for r in range(len(tmp[t]), len(self.hardware[3].split('|'))):
                     tmp[t].append('(n/a)')
+        # sort based on disk name if this is for physical disk
+        # need this to maintain the order
+        if self.hardware[2] == 'PDisk':
+            tmp2 = {}
+            for i, v in enumerate(sorted(tmp.values(), key=lambda x: x[1]), 1):
+                v[0] = i
+                tmp2[i] = v
+            tmp = tmp2
         return tmp
 
     def raise_alert(self, tmp, value_on_alert):
